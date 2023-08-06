@@ -56,7 +56,7 @@ exports.exploreCategoriesById = async (req, res) => {
       limitNumber
     );
     res.render("categories", {
-      title: "Cooking Blog - Categoreis",
+      title: "Cooking Blog - Categories",
       categoryById,
     });
   } catch (error) {
