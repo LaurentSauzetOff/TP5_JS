@@ -12,12 +12,8 @@ exports.homepage = async (req, res) => {
     const categories = await Category.find({}).limit(limitNumber);
     const latest = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber);
     const thai = await Recipe.find({ category: "Thai" }).limit(limitNumber);
-    const american = await Recipe.find({ category: "American" }).limit(
-      limitNumber
-    );
-    const chinese = await Recipe.find({ category: "Chinese" }).limit(
-      limitNumber
-    );
+    const american = await Recipe.find({ category: "American" }).limit(limitNumber);
+    const chinese = await Recipe.find({ category: "Chinese" }).limit(limitNumber);
 
     const food = { latest, thai, american, chinese };
 
@@ -35,10 +31,7 @@ exports.exploreCategories = async (req, res) => {
   try {
     const limitNumber = 20;
     const categories = await Category.find({}).limit(limitNumber);
-    res.render("categories", {
-      title: "Cooking Blog - Categoreis",
-      categories,
-    });
+    res.render("categories", { title: "Cooking Blog - Categories", categories });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occured" });
   }
@@ -52,13 +45,8 @@ exports.exploreCategoriesById = async (req, res) => {
   try {
     let categoryId = req.params.id;
     const limitNumber = 20;
-    const categoryById = await Recipe.find({ category: categoryId }).limit(
-      limitNumber
-    );
-    res.render("categories", {
-      title: "Cooking Blog - Categories",
-      categoryById,
-    });
+    const categoryById = await Recipe.find({ category: categoryId }).limit(limitNumber);
+    res.render("categories", { title: "Cooking Blog - Categories",categoryById });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occured" });
   }
@@ -85,9 +73,7 @@ exports.exploreRecipe = async (req, res) => {
 exports.searchRecipe = async (req, res) => {
   try {
     let searchTerm = req.body.searchTerm;
-    let recipe = await Recipe.find({
-      $text: { $search: searchTerm, $diacriticSensitive: true },
-    });
+    let recipe = await Recipe.find({ $text: { $search: searchTerm, $diacriticSensitive: true } });
     res.render("search", { title: "Cooking Blog - Search", recipe });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occured" });
@@ -104,7 +90,7 @@ exports.exploreLatest = async (req, res) => {
     const recipe = await Recipe.find({}).sort({ _id: -1 }).limit(limitNumber);
     res.render("explore-latest", {
       title: "Cooking Blog - Explore Latest",
-      recipe,
+      recipe
     });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occured" });
@@ -122,7 +108,7 @@ exports.exploreRandom = async (req, res) => {
     let recipe = await Recipe.findOne().skip(random).exec();
     res.render("explore-random", {
       title: "Cooking Blog - Explore Latest",
-      recipe,
+      recipe
     });
   } catch (error) {
     res.status(500).send({ message: error.message || "Error Occured" });
@@ -139,7 +125,7 @@ exports.submitRecipe = async (req, res) => {
   res.render("submit-recipe", {
     title: "Cooking Blog - Submit Recipe",
     infoErrorsObj,
-    infoSubmitObj,
+    infoSubmitObj
   });
 };
 
@@ -173,7 +159,7 @@ exports.submitRecipeOnPost = async (req, res) => {
       email: req.body.email,
       ingredients: req.body.ingredients,
       category: req.body.category,
-      image: newImageName,
+      image: newImageName
     });
 
     await newRecipe.save();
@@ -198,11 +184,11 @@ exports.submitRecipeOnPost = async (req, res) => {
 }
 updateRecipe(); */
 
-async function deleteRecipe() {
+/* async function deleteRecipe() {
   try {
     await Recipe.deleteOne({ name: "New Recipe from form" });
   } catch (error) {
     console.log(error);
   }
 }
-deleteRecipe();
+deleteRecipe(); */
