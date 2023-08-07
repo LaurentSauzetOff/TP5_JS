@@ -186,3 +186,23 @@ exports.submitRecipeOnPost = async (req, res) => {
     res.redirect("/submit-recipe");
   }
 };
+
+/* async function updateRecipe() {
+  try {
+    const res = await Recipe.updateOne({ name: "New Recipe"}, { name: "New Recipe updated"});
+    res.n;
+    res.nModified;
+  } catch (error) {
+    console.log(error);
+  }
+}
+updateRecipe(); */
+
+async function deleteRecipe() {
+  try {
+    await Recipe.deleteOne({ name: "New Recipe from form" });
+  } catch (error) {
+    console.log(error);
+  }
+}
+deleteRecipe();
